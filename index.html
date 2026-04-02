@@ -82,57 +82,55 @@
     }
 
     /* Atmosphere */
-    .atmosphere {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
 
-    .atmosphere span {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(226,177,124,0.42) 0%, rgba(210,139,77,0.16) 48%, transparent 72%);
-      filter: blur(0.5px);
-      opacity: 0;
-      animation: drift var(--dur) linear infinite;
-      animation-delay: var(--delay);
-      left: var(--left);
-      top: -10vh;
-    }
+.atmosphere span {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(226,177,124,0.72) 0%, rgba(210,139,77,0.34) 50%, transparent 78%);
+  filter: blur(1px);
+  opacity: 0;
+  animation: drift var(--dur) linear infinite;
+  animation-delay: var(--delay);
+  left: var(--left);
+  top: -10vh;
+}
 
-    .atmosphere span:nth-child(3n) {
-      width: 10px;
-      height: 10px;
-      filter: blur(1px);
-      opacity: 0.22;
-    }
+.atmosphere span:nth-child(3n) {
+  width: 14px;
+  height: 14px;
+  filter: blur(1.5px);
+}
 
-    .atmosphere span:nth-child(4n) {
-      width: 4px;
-      height: 4px;
-      opacity: 0.18;
-    }
+.atmosphere span:nth-child(4n) {
+  width: 7px;
+  height: 7px;
+}
 
-    @keyframes drift {
-      0% {
-        transform: translate3d(0, -10vh, 0) scale(0.8);
-        opacity: 0;
-      }
-      15% {
-        opacity: 0.32;
-      }
-      50% {
-        transform: translate3d(18px, 45vh, 0) scale(1);
-      }
-      100% {
-        transform: translate3d(-22px, 110vh, 0) scale(0.9);
-        opacity: 0;
-      }
-    }
+@keyframes drift {
+  0% {
+    transform: translate3d(0, -10vh, 0) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(18px, 45vh, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-22px, 110vh, 0) scale(0.9);
+    opacity: 0;
+  }
+}
 
     /* Nav */
     .nav {
