@@ -33,6 +33,8 @@
       margin: 0;
       font-family: Arial, sans-serif;
       color: var(--text);
+      position: relative;
+z-index: 1;
       background:
         radial-gradient(circle at top left, rgba(210,139,77,0.12), transparent 26%),
         radial-gradient(circle at top right, rgba(143,78,44,0.12), transparent 24%),
@@ -421,9 +423,60 @@
         padding: 72px 0;
       }
     }
+      /* LEAVES BACKGROUND */
+.leaves {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.leaves span {
+  position: absolute;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: rgba(210, 139, 77, 0.22);
+  border-radius: 50% 0;
+  animation: fall linear infinite;
+}
+
+/* positioning + timing */
+.leaves span:nth-child(1) { left: 10%; animation-duration: 12s; }
+.leaves span:nth-child(2) { left: 25%; animation-duration: 10s; }
+.leaves span:nth-child(3) { left: 40%; animation-duration: 14s; }
+.leaves span:nth-child(4) { left: 60%; animation-duration: 11s; }
+.leaves span:nth-child(5) { left: 75%; animation-duration: 13s; }
+.leaves span:nth-child(6) { left: 90%; animation-duration: 9s; }
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
   </style>
 </head>
 <body>
+  <div class="leaves">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  </div>
 
   <nav class="nav">
     <div class="container nav-inner">
