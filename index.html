@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prox Centauri</title>
+  <meta name="description" content="Prox Centauri, Artist, Producer, Sound" />
+  <style>
+    :root {
+      --bg-1: #0d1214;
+      --bg-2: #151d20;
+      --bg-3: #1d2a2f;
+      --text: #edf2f2;
+      --muted: #a9b7b9;
+      --accent: #8ea5a5;
+      --accent-soft: #c6d1d1;
+      --card: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.10);
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(142,165,165,0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(198,209,209,0.08), transparent 24%),
+        linear-gradient(180deg, var(--bg-2), var(--bg-1) 42%, #090d0e 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1150px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(9, 13, 14, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      font-size: 0.92rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 84vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(7,10,11,0.18), rgba(7,10,11,0.72)),
+        url("hero.jpg") center center / cover no-repeat;
+      opacity: 0.34;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(198,209,209,0.10), transparent 20%),
+        radial-gradient(circle at 70% 30%, rgba(142,165,165,0.10), transparent 25%),
+        linear-gradient(180deg, transparent 55%, rgba(7,10,11,0.72) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 90px 0;
+      width: 100%;
+    }
+
+    .hero-card {
+      max-width: 740px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      padding: 30px;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      font-size: 0.92rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      line-height: 0.95;
+      letter-spacing: 0.4px;
+    }
+
+    .hero-sub {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      max-width: 560px;
+    }
+
+    .hero-buttons {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(142,165,165,0.24), rgba(198,209,209,0.12));
+      border-color: rgba(198,209,209,0.20);
+    }
+
+    .section {
+      padding: 84px 0;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      letter-spacing: 0.2px;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 22px;
+    }
+
+    .about-copy {
+      color: #dbe3e3;
+      font-size: 1.02rem;
+    }
+
+    .mini-panel h3,
+    .feature-copy h3,
+    .project-card h3,
+    .social-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .feature-meta {
+      color: var(--accent-soft);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 0.84rem;
+      margin-bottom: 12px;
+    }
+
+    .feature-copy p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .feature-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill-link {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .pill-link:hover {
+      background: rgba(255,255,255,0.09);
+      transform: translateY(-2px);
+    }
+
+    .embed-wrap {
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.18);
+      min-height: 352px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .project-card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03)),
+        radial-gradient(circle at top left, rgba(142,165,165,0.08), transparent 35%);
+    }
+
+    .project-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .project-card .btn {
+      margin-top: 20px;
+      width: fit-content;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .social-card p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 20px 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .footer strong {
+      color: var(--accent-soft);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 980px) {
+      .about-wrap,
+      .feature-grid,
+      .projects-grid,
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero {
+        min-height: 78vh;
+      }
+
+      .hero-card {
+        padding: 24px;
+      }
+
+      .hero-buttons,
+      .feature-actions,
+      .social-links {
+        flex-direction: column;
+      }
+
+      .btn,
+      .pill-link {
+        width: 100%;
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Prox Centauri</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#latest">Latest Release</a>
+        <a href="#projects">Albums / Projects</a>
+        <a href="#player">Player</a>
+        <a href="#socials">Social Links</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-content">
+      <div class="hero-card">
+        <div class="eyebrow">Artist • Producer • Sound</div>
+        <h1>Prox Centauri</h1>
+        <p class="hero-sub">
+          Calm, atmospheric, and rooted in lyricism, a space for language, sound, and deliberate craft.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn primary" href="#latest">Latest Release</a>
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn" href="https://www.instagram.com/prox_cen?igsh=MWc4OGQ0b2hwN2xyaA==" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title">About</h2>
+        <p class="section-intro">
+          Substantive Hip-Hop, layered writing, and a deliberate focus on lyricism without forced excess.
+        </p>
+
+        <div class="about-wrap">
+          <div class="card">
+            <div class="about-copy">
+              Flint, Michigan born lyricist Prox Centauri is intent on melding his love of intellectualism and high-level linguistics to craft music that expresses his passionate drive for substantive Hip-Hop. Heavily inspired by a myriad of artistic and academic mediums, the expansive emcee explores various topics through a litany of complex styles and schemes. Influenced by artists such as Nas, AZ, MF DOOM, eIZHi, Big L, Twista, and Ras Kass, Prox aims to utilize his creative energies to forward the importance of lyricism.
+            </div>
+          </div>
+
+          <div class="card mini-panel">
+            <h3>Focus</h3>
+            <div class="mini-list">
+              <div>Lyric-driven writing</div>
+              <div>Atmospheric composition</div>
+              <div>Artist, producer, and portfolio hybrid</div>
+              <div>Calm visual language, no noise for no reason</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="latest">
+      <div class="container">
+        <h2 class="section-title">Latest Release</h2>
+        <p class="section-intro">
+          Featured release, newest project, and main entry point into the catalog.
+        </p>
+
+        <div class="feature-grid">
+          <div class="card feature-copy">
+            <div class="feature-meta">Featured • 2026 Album</div>
+            <h3>Reading Tea Leaves Vol. IV</h3>
+            <p>
+              The current lead project and the main focal point of the site. This release anchors the page, with the embedded Spotify player tied directly to it.
+            </p>
+            <div class="feature-actions">
+              <a class="pill-link" href="https://open.spotify.com/album/7yLJ4I5clpdyYSkoNXwDYk?si=3LMZE2lkRrusOBOkohJPkA" target="_blank" rel="noopener noreferrer">Open on Spotify</a>
+              <a class="pill-link" href="https://music.apple.com/us/artist/prox-centauri/1469651039?ls" target="_blank" rel="noopener noreferrer">Apple Music</a>
+              <a class="pill-link" href="https://youtube.com/@proxcentauri?si=6KnnWRDCcL5GUS6R" target="_blank" rel="noopener noreferrer">YouTube</a>
+              <a class="pill-link" href="https://proxcentauri.bandcamp.com/album/emergence" target="_blank" rel="noopener noreferrer">Bandcamp</a>
+            </div>
+          </div>
+
+          <div class="card" id="player">
+            <div class="embed-wrap">
+              <iframe
+                style="border-radius:12px"
+                src="https://open.spotify.com/embed/album/7yLJ4I5clpdyYSkoNXwDYk?utm_source=generator&theme=0"
+                width="100%"
+                height="352"
+                frameBorder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <h2 class="section-title">Albums / Projects</h2>
+        <p class="section-intro">
+          Organized newest to oldest.
+        </p>
+
+        <div class="projects-grid">
+          <div class="card project-card">
+            <div>
+              <h3>Midnight Study Sesh</h3>
+              <div class="project-meta">Album • 2025</div>
+              <p>Released after Vol. IV, presented here as part of the current catalog sequence.</p>
+            </div>
+            <a class="btn" href="https://open.spotify.com/album/2Gfi1ejs8khdERWp4kBdkg?si=HQGJJPvSTnGLSTlCkuDLTQ" target="_blank" rel="noopener noreferrer">Open Project</a>
+          </div>
+
+          <div class="card project-card">
+            <div>
+              <h3>Reading Tea Leaves Vol. III</h3>
+              <div class="project-meta">Album • 2025</div>
+              <p>Third volume in the Reading Tea Leaves series, continuing the catalog thread.</p>
+            </div>
+            <a class="btn" href="https://open.spotify.com/album/6UMlT7ky8VWzgZ6JVu6aTG?si=4fv6zbsLShen5PJT39uAWg" target="_blank" rel="noopener noreferrer">Open Project</a>
+          </div>
+
+          <div class="card project-card">
+            <div>
+              <h3>Reading Tea Leaves Vol. II</h3>
+              <div class="project-meta">Album • 2025</div>
+              <p>Second volume, placed in sequence with the broader Reading Tea Leaves run.</p>
+            </div>
+            <a class="btn" href="https://open.spotify.com/album/1MTCOM0iaynp0R1ZXAoY7R?si=6nKGhcuJRXqBz84UaAQV_w" target="_blank" rel="noopener noreferrer">Open Project</a>
+          </div>
+
+          <div class="card project-card">
+            <div>
+              <h3>Reading Tea Leaves Vol. I</h3>
+              <div class="project-meta">Album • 2025</div>
+              <p>The first volume in the series, still part of the active project catalog.</p>
+            </div>
+            <a class="btn" href="https://open.spotify.com/album/3Q2dhJ7EXE7eAC0mF8MbDu?si=V0a_T-s5RJS0qCFFCjL7oQ" target="_blank" rel="noopener noreferrer">Open Project</a>
+          </div>
+
+          <div class="card project-card">
+            <div>
+              <h3>Emergence</h3>
+              <div class="project-meta">EP • 2025</div>
+              <p>A shorter project entry in the lineup, also available through Bandcamp.</p>
+            </div>
+            <a class="btn" href="https://open.spotify.com/album/6iyyQZIuAQLrAYFg7oOwmI?si=FNIOPLl9RjeT91_h5-A1xA" target="_blank" rel="noopener noreferrer">Open Project</a>
+          </div>
+
+          <div class="card project-card">
+            <div>
+              <h3>Mending What's Broken: Odes for Stalwart Days &amp; Fearless Nights Remastered</h3>
+              <div class="project-meta">Album • 2021 (2025 Remaster)</div>
+              <p>An earlier project revisited through a 2025 remastered release.</p>
+            </div>
+            <a class="btn" href="https://open.spotify.com/album/1gUd8t4Wkvbfb5swfKqoWz?si=AJiHzqanRM-xzN9wu28BlQ" target="_blank" rel="noopener noreferrer">Open Project</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="socials">
+      <div class="container">
+        <h2 class="section-title">Social Links</h2>
+        <p class="section-intro">
+          Direct access to streaming, video, and social platforms.
+        </p>
+
+        <div class="social-grid">
+          <div class="card social-card">
+            <h3>Streaming</h3>
+            <p>Main listening platforms.</p>
+            <div class="social-links">
+              <a class="pill-link" href="https://open.spotify.com/artist/137PzJ7saqvprPUOxlsQSv?si=YrxUrcqXT72Ea15I9_qq_A" target="_blank" rel="noopener noreferrer">Spotify</a>
+              <a class="pill-link" href="https://music.apple.com/us/artist/prox-centauri/1469651039?ls" target="_blank" rel="noopener noreferrer">Apple Music</a>
+              <a class="pill-link" href="https://proxcentauri.bandcamp.com/album/emergence" target="_blank" rel="noopener noreferrer">Bandcamp</a>
+            </div>
+          </div>
+
+          <div class="card social-card">
+            <h3>Video</h3>
+            <p>Channel and visual presence.</p>
+            <div class="social-links">
+              <a class="pill-link" href="https://youtube.com/@proxcentauri?si=6KnnWRDCcL5GUS6R" target="_blank" rel="noopener noreferrer">YouTube</a>
+            </div>
+          </div>
+
+          <div class="card social-card">
+            <h3>Social</h3>
+            <p>Active profile now, Threads can be added later.</p>
+            <div class="social-links">
+              <a class="pill-link" href="https://www.instagram.com/prox_cen?igsh=MWc4OGQ0b2hwN2xyaA==" target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a class="pill-link" href="#">Threads</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <strong>Prox Centauri</strong>
+  </footer>
+
+</body>
+</html>
