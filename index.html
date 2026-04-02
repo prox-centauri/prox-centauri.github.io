@@ -5,20 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prox Centauri</title>
   <meta name="description" content="Prox Centauri, Artist, Producer, Sound" />
+  <meta property="og:title" content="Prox Centauri" />
+  <meta property="og:description" content="Artist • Producer • Sound" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-1: #120f0d;
       --bg-2: #1b1511;
       --bg-3: #2a1e18;
+      --bg-4: #37241a;
       --text: #f4ede6;
       --muted: #c5b2a2;
       --accent: #d28b4d;
       --accent-soft: #e2b17c;
       --accent-deep: #8f4e2c;
-      --card: rgba(44, 29, 21, 0.74);
-      --card-soft: rgba(68, 43, 30, 0.52);
+      --card: rgba(44, 29, 21, 0.72);
+      --card-soft: rgba(68, 43, 30, 0.46);
+      --glass: rgba(56, 36, 26, 0.52);
       --border: rgba(210, 139, 77, 0.22);
+      --border-strong: rgba(226, 177, 124, 0.34);
       --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+      --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.22);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --content-width: min(1180px, calc(100% - 40px));
     }
 
     * {
@@ -26,18 +41,27 @@
       scroll-behavior: smooth;
     }
 
+    html {
+      background: #0c0908;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: "Inter", sans-serif;
       color: var(--text);
       position: relative;
-      z-index: 1;
       background:
         radial-gradient(circle at top left, rgba(210,139,77,0.12), transparent 26%),
         radial-gradient(circle at top right, rgba(143,78,44,0.12), transparent 24%),
         radial-gradient(circle at bottom right, rgba(226,177,124,0.08), transparent 22%),
         linear-gradient(180deg, var(--bg-2), var(--bg-1) 42%, #0c0908 100%);
       line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--accent-soft);
+      color: #24170f;
     }
 
     a {
@@ -45,17 +69,78 @@
       text-decoration: none;
     }
 
-    .container {
-      width: min(1150px, calc(100% - 40px));
-      margin: 0 auto;
+    img {
+      display: block;
+      max-width: 100%;
     }
 
+    .container {
+      width: var(--content-width);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Atmosphere */
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .atmosphere span {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(226,177,124,0.42) 0%, rgba(210,139,77,0.16) 48%, transparent 72%);
+      filter: blur(0.5px);
+      opacity: 0;
+      animation: drift var(--dur) linear infinite;
+      animation-delay: var(--delay);
+      left: var(--left);
+      top: -10vh;
+    }
+
+    .atmosphere span:nth-child(3n) {
+      width: 10px;
+      height: 10px;
+      filter: blur(1px);
+      opacity: 0.22;
+    }
+
+    .atmosphere span:nth-child(4n) {
+      width: 4px;
+      height: 4px;
+      opacity: 0.18;
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translate3d(0, -10vh, 0) scale(0.8);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.32;
+      }
+      50% {
+        transform: translate3d(18px, 45vh, 0) scale(1);
+      }
+      100% {
+        transform: translate3d(-22px, 110vh, 0) scale(0.9);
+        opacity: 0;
+      }
+    }
+
+    /* Nav */
     .nav {
       position: sticky;
       top: 0;
       z-index: 1000;
-      backdrop-filter: blur(12px);
-      background: rgba(16, 11, 9, 0.78);
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(16,11,9,0.88), rgba(16,11,9,0.72));
       border-bottom: 1px solid rgba(210, 139, 77, 0.14);
     }
 
@@ -68,11 +153,12 @@
     }
 
     .brand {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent-soft);
       white-space: nowrap;
+      font-weight: 600;
     }
 
     .nav-links {
@@ -92,13 +178,15 @@
       transform: translateY(-1px);
     }
 
+    /* Hero */
     .hero {
       position: relative;
-      min-height: 84vh;
+      min-height: 92vh;
       display: flex;
       align-items: center;
       overflow: hidden;
-      border-bottom: 1px solid rgba(210, 139, 77, 0.14);
+      border-bottom: 1px solid rgba(210, 139, 77, 0.12);
+      isolation: isolate;
     }
 
     .hero::before {
@@ -106,9 +194,11 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(to bottom, rgba(15,10,8,0.28), rgba(15,10,8,0.82)),
+        linear-gradient(to bottom, rgba(15,10,8,0.22), rgba(15,10,8,0.84)),
         url("hero.jpg") center center / cover no-repeat;
       opacity: 0.62;
+      transform: scale(1.04);
+      z-index: 0;
     }
 
     .hero::after {
@@ -116,45 +206,65 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 20%, rgba(226,177,124,0.10), transparent 18%),
-        radial-gradient(circle at 70% 30%, rgba(210,139,77,0.12), transparent 24%),
-        linear-gradient(180deg, transparent 55%, rgba(10, 7, 6, 0.76) 100%);
+        radial-gradient(circle at 18% 18%, rgba(226,177,124,0.10), transparent 18%),
+        radial-gradient(circle at 72% 28%, rgba(210,139,77,0.12), transparent 24%),
+        linear-gradient(180deg, transparent 52%, rgba(10, 7, 6, 0.82) 100%);
+      z-index: 0;
       pointer-events: none;
     }
 
     .hero-content {
       position: relative;
-      z-index: 2;
-      padding: 90px 0;
+      z-index: 1;
+      padding: 108px 0 96px;
       width: 100%;
     }
 
     .hero-card {
-      max-width: 740px;
-      background: rgba(35, 22, 16, 0.58);
+      max-width: 760px;
+      margin: 0 auto;
+      background:
+        linear-gradient(135deg, rgba(56,36,26,0.72), rgba(28,18,14,0.46)),
+        rgba(35,22,16,0.52);
       border: 1px solid rgba(226,177,124,0.18);
-      border-radius: 24px;
-      padding: 30px;
-      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 36px;
+      backdrop-filter: blur(16px);
       box-shadow: var(--shadow);
       text-align: center;
+      position: relative;
     }
 
     .eyebrow {
-      font-size: 0.92rem;
-      letter-spacing: 2px;
+      font-size: 0.88rem;
+      letter-spacing: 2.4px;
       text-transform: uppercase;
       color: var(--accent-soft);
       margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .hero-logo-wrap {
+      position: relative;
+      width: fit-content;
+      margin: 8px auto 20px;
+    }
+
+    .hero-logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -26px;
+      background: radial-gradient(circle, rgba(210,139,77,0.20), transparent 68%);
+      z-index: 0;
+      filter: blur(12px);
     }
 
     .hero-logo {
       width: 180px;
-      margin: 10px auto 18px;
-      display: block;
+      position: relative;
+      z-index: 1;
       opacity: 0.95;
-      filter: drop-shadow(0 10px 25px rgba(0,0,0,0.4));
-      box-shadow: 0 0 40px rgba(210, 139, 77, 0.15);
+      filter: drop-shadow(0 14px 28px rgba(0,0,0,0.4));
       animation: float 6s ease-in-out infinite;
     }
 
@@ -164,23 +274,28 @@
       100% { transform: translateY(0px); }
     }
 
+    h1, h2, h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 600;
+      line-height: 0.98;
+      letter-spacing: 0.1px;
+    }
+
     h1 {
       margin: 0;
-      font-size: clamp(2.8rem, 7vw, 5.8rem);
-      line-height: 0.95;
-      letter-spacing: 0.4px;
+      font-size: clamp(3.2rem, 7vw, 6.4rem);
       color: var(--text);
     }
 
     .hero-sub {
-      margin: 14px auto 0;
+      margin: 16px auto 0;
       color: #e2d0c0;
-      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-size: clamp(1rem, 2vw, 1.12rem);
       max-width: 560px;
     }
 
     .hero-buttons {
-      margin-top: 28px;
+      margin-top: 30px;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
@@ -191,13 +306,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 46px;
-      padding: 12px 18px;
+      min-height: 50px;
+      padding: 13px 20px;
       border-radius: 999px;
       border: 1px solid rgba(226,177,124,0.18);
       background: rgba(255,255,255,0.05);
       color: var(--text);
       transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      font-weight: 500;
     }
 
     .btn:hover {
@@ -207,25 +323,34 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.18);
     }
 
+    .btn:active,
+    .pill-link:active {
+      transform: scale(0.98);
+    }
+
     .btn.primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-deep));
       border-color: rgba(226,177,124,0.36);
       color: #fff7f0;
-      box-shadow: 0 8px 20px rgba(210,139,77,0.35);
+      box-shadow: 0 10px 24px rgba(210,139,77,0.34);
     }
 
     .btn.primary:hover {
       background: linear-gradient(135deg, #de9957, #9d5731);
+      box-shadow: 0 14px 30px rgba(210,139,77,0.42);
     }
 
+    /* Sections */
     .section {
-      padding: 84px 0;
+      padding: 92px 0;
+      border-bottom: 1px solid rgba(226,177,124,0.08);
+      position: relative;
+      z-index: 2;
     }
 
     .section-title {
       margin: 0 0 12px;
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
-      letter-spacing: 0.2px;
+      font-size: clamp(2.2rem, 4vw, 3.3rem);
       color: var(--accent-soft);
     }
 
@@ -233,19 +358,27 @@
       max-width: 760px;
       color: var(--muted);
       margin-bottom: 30px;
+      font-size: 1rem;
     }
 
     .start-here {
-      color: var(--muted);
-      margin-bottom: 20px;
+      color: var(--accent-soft);
+      margin: 0 0 18px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-size: 0.82rem;
     }
 
     .card {
-      background: var(--card);
+      background:
+        linear-gradient(135deg, rgba(210,139,77,0.08), rgba(44,29,21,0.58)),
+        var(--card);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 26px;
+      border-radius: var(--radius);
+      padding: 28px;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
     }
 
     .about-wrap {
@@ -265,7 +398,7 @@
     .social-card h3 {
       margin-top: 0;
       margin-bottom: 10px;
-      font-size: 1.15rem;
+      font-size: 1.7rem;
       color: var(--text);
     }
 
@@ -275,11 +408,31 @@
       color: var(--muted);
     }
 
+    /* Featured section */
     .feature-grid {
       display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
+      grid-template-columns: 1.02fr 0.98fr;
       gap: 22px;
       align-items: stretch;
+    }
+
+    .feature-copy {
+      background:
+        linear-gradient(135deg, rgba(210,139,77,0.18), rgba(143,78,44,0.12)),
+        var(--card);
+      border: 1px solid var(--border-strong);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -30% auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(226,177,124,0.10), transparent 70%);
+      pointer-events: none;
     }
 
     .feature-meta {
@@ -288,18 +441,13 @@
       letter-spacing: 1.5px;
       font-size: 0.84rem;
       margin-bottom: 12px;
-    }
-
-    .feature-copy {
-      background:
-        linear-gradient(135deg, rgba(210,139,77,0.18), rgba(143,78,44,0.12)),
-        var(--card);
-      border: 1px solid rgba(226,177,124,0.35);
+      font-weight: 600;
     }
 
     .feature-copy p {
       color: var(--muted);
       margin-top: 0;
+      max-width: 48ch;
     }
 
     .feature-actions {
@@ -316,24 +464,34 @@
       border: 1px solid rgba(226,177,124,0.18);
       background: rgba(255,255,255,0.04);
       color: var(--text);
-      transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      font-weight: 500;
     }
 
     .pill-link:hover {
       background: rgba(210,139,77,0.14);
       border-color: rgba(226,177,124,0.30);
       transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .embed-card {
+      padding: 16px;
+      background:
+        linear-gradient(135deg, rgba(210,139,77,0.10), rgba(44,29,21,0.48)),
+        rgba(20, 13, 10, 0.58);
     }
 
     .embed-wrap {
       overflow: hidden;
-      border-radius: 18px;
+      border-radius: 20px;
       border: 1px solid rgba(226,177,124,0.25);
       background: rgba(0,0,0,0.20);
       min-height: 352px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
 
+    /* Projects */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -349,15 +507,28 @@
         linear-gradient(180deg, rgba(210,139,77,0.10), rgba(255,255,255,0.02)),
         radial-gradient(circle at top left, rgba(226,177,124,0.10), transparent 32%),
         var(--card-soft);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 44px rgba(0,0,0,0.32);
+      border-color: rgba(226,177,124,0.28);
     }
 
     .project-card img {
       width: 100%;
-      height: 180px;
+      height: 200px;
       object-fit: cover;
       border-radius: 14px;
       margin-bottom: 12px;
       border: 1px solid rgba(226,177,124,0.16);
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .project-card:hover img {
+      transform: scale(1.03);
+      filter: saturate(1.04);
     }
 
     .project-meta {
@@ -377,6 +548,7 @@
       width: fit-content;
     }
 
+    /* Social */
     .social-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -401,6 +573,8 @@
       color: var(--muted);
       font-size: 0.96rem;
       background: rgba(14, 10, 8, 0.4);
+      position: relative;
+      z-index: 2;
     }
 
     .footer strong {
@@ -409,49 +583,24 @@
       letter-spacing: 1px;
     }
 
-    /* LEAVES BACKGROUND */
-    .leaves {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
+    /* Reveal motion */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
     }
 
-    .leaves span {
-      position: absolute;
-      display: block;
-      width: 18px;
-      height: 18px;
-      background: rgba(210, 139, 77, 0.22);
-      border-radius: 50% 0;
-      animation: fall linear infinite;
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .leaves span:nth-child(1) { left: 10%; animation-duration: 12s; }
-    .leaves span:nth-child(2) { left: 25%; animation-duration: 10s; }
-    .leaves span:nth-child(3) { left: 40%; animation-duration: 14s; }
-    .leaves span:nth-child(4) { left: 60%; animation-duration: 11s; }
-    .leaves span:nth-child(5) { left: 75%; animation-duration: 13s; }
-    .leaves span:nth-child(6) { left: 90%; animation-duration: 9s; }
+    .reveal.delay-1 { transition-delay: 0.08s; }
+    .reveal.delay-2 { transition-delay: 0.16s; }
+    .reveal.delay-3 { transition-delay: 0.24s; }
 
-    @keyframes fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-        opacity: 0;
-      }
-      20% {
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
+    /* Responsive */
     @media (max-width: 980px) {
       .about-wrap,
       .feature-grid,
@@ -459,9 +608,17 @@
       .social-grid {
         grid-template-columns: 1fr;
       }
+
+      .hero {
+        min-height: 84vh;
+      }
     }
 
     @media (max-width: 640px) {
+      .container {
+        width: min(100% - 20px, 1180px);
+      }
+
       .nav-inner {
         flex-direction: column;
         align-items: flex-start;
@@ -484,6 +641,7 @@
       .btn,
       .pill-link {
         width: 100%;
+        min-height: 54px;
       }
 
       .section {
@@ -493,17 +651,25 @@
       .hero-logo {
         width: 160px;
       }
+
+      .project-card img {
+        height: 220px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="leaves">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+  <div class="atmosphere" aria-hidden="true">
+    <span style="--left: 8%; --dur: 14s; --delay: 0s;"></span>
+    <span style="--left: 18%; --dur: 18s; --delay: 2s;"></span>
+    <span style="--left: 28%; --dur: 15s; --delay: 5s;"></span>
+    <span style="--left: 38%; --dur: 19s; --delay: 1s;"></span>
+    <span style="--left: 48%; --dur: 16s; --delay: 4s;"></span>
+    <span style="--left: 58%; --dur: 20s; --delay: 3s;"></span>
+    <span style="--left: 68%; --dur: 14s; --delay: 6s;"></span>
+    <span style="--left: 78%; --dur: 17s; --delay: 2s;"></span>
+    <span style="--left: 88%; --dur: 15s; --delay: 7s;"></span>
+    <span style="--left: 94%; --dur: 19s; --delay: 0.5s;"></span>
   </div>
 
   <nav class="nav">
@@ -521,9 +687,11 @@
 
   <header class="hero">
     <div class="container hero-content">
-      <div class="hero-card">
+      <div class="hero-card reveal is-visible">
         <div class="eyebrow">Artist • Producer • Sound</div>
-        <img src="tea-logo.png" class="hero-logo" alt="Prox Centauri tea logo">
+        <div class="hero-logo-wrap">
+          <img src="tea-logo.png" class="hero-logo" alt="Prox Centauri tea logo">
+        </div>
         <h1>Prox Centauri</h1>
         <p class="hero-sub">
           Calm, atmospheric, and rooted in lyricism.
@@ -539,7 +707,7 @@
 
   <main>
 
-    <section class="section" id="latest">
+    <section class="section reveal" id="latest">
       <div class="container">
         <h2 class="section-title">Reading Tea Leaves Vol. IV</h2>
         <p class="start-here">Start here.</p>
@@ -548,7 +716,7 @@
         </p>
 
         <div class="feature-grid">
-          <div class="card feature-copy">
+          <div class="card feature-copy reveal delay-1">
             <div class="feature-meta">Featured • 2026 Album</div>
             <h3>Reading Tea Leaves Vol. IV</h3>
             <p>
@@ -562,7 +730,7 @@
             </div>
           </div>
 
-          <div class="card" id="player">
+          <div class="card embed-card reveal delay-2" id="player">
             <div class="embed-wrap">
               <iframe
                 style="border-radius:12px"
@@ -580,7 +748,7 @@
       </div>
     </section>
 
-    <section class="section" id="about">
+    <section class="section reveal" id="about">
       <div class="container">
         <h2 class="section-title">About</h2>
         <p class="section-intro">
@@ -588,13 +756,13 @@
         </p>
 
         <div class="about-wrap">
-          <div class="card">
+          <div class="card reveal delay-1">
             <div class="about-copy">
               Flint, Michigan born lyricist Prox Centauri is intent on melding his love of intellectualism and high-level linguistics to craft music that expresses his passionate drive for substantive Hip-Hop. Heavily inspired by a myriad of artistic and academic mediums, the expansive emcee explores various topics through a litany of complex styles and schemes. Influenced by artists such as Nas, AZ, MF DOOM, eIZHi, Big L, Twista, and Ras Kass, Prox aims to utilize his creative energies to forward the importance of lyricism.
             </div>
           </div>
 
-          <div class="card mini-panel">
+          <div class="card mini-panel reveal delay-2">
             <h3>Focus</h3>
             <div class="mini-list">
               <div>Lyric-driven writing</div>
@@ -607,7 +775,7 @@
       </div>
     </section>
     
-    <section class="section" id="projects">
+    <section class="section reveal" id="projects">
       <div class="container">
         <h2 class="section-title">Albums / Projects</h2>
         <p class="section-intro">
@@ -615,7 +783,7 @@
         </p>
 
         <div class="projects-grid">
-          <div class="card project-card">
+          <div class="card project-card reveal delay-1">
             <div>
               <img src="midnight.jpg" alt="Midnight Study Sesh">
               <h3>Midnight Study Sesh</h3>
@@ -625,7 +793,7 @@
             <a class="btn" href="https://open.spotify.com/album/2Gfi1ejs8khdERWp4kBdkg?si=HQGJJPvSTnGLSTlCkuDLTQ" target="_blank" rel="noopener noreferrer">Open Project</a>
           </div>
 
-          <div class="card project-card">
+          <div class="card project-card reveal delay-2">
             <div>
               <img src="vol3.jpg" alt="Reading Tea Leaves Vol. III">
               <h3>Reading Tea Leaves Vol. III</h3>
@@ -635,7 +803,7 @@
             <a class="btn" href="https://open.spotify.com/album/6UMlT7ky8VWzgZ6JVu6aTG?si=4fv6zbsLShen5PJT39uAWg" target="_blank" rel="noopener noreferrer">Open Project</a>
           </div>
 
-          <div class="card project-card">
+          <div class="card project-card reveal delay-3">
             <div>
               <img src="vol2.jpg" alt="Reading Tea Leaves Vol. II">
               <h3>Reading Tea Leaves Vol. II</h3>
@@ -645,7 +813,7 @@
             <a class="btn" href="https://open.spotify.com/album/1MTCOM0iaynp0R1ZXAoY7R?si=6nKGhcuJRXqBz84UaAQV_w" target="_blank" rel="noopener noreferrer">Open Project</a>
           </div>
 
-          <div class="card project-card">
+          <div class="card project-card reveal delay-1">
             <div>
               <img src="vol1.jpg" alt="Reading Tea Leaves Vol. I">
               <h3>Reading Tea Leaves Vol. I</h3>
@@ -655,7 +823,7 @@
             <a class="btn" href="https://open.spotify.com/album/3Q2dhJ7EXE7eAC0mF8MbDu?si=V0a_T-s5RJS0qCFFCjL7oQ" target="_blank" rel="noopener noreferrer">Open Project</a>
           </div>
 
-          <div class="card project-card">
+          <div class="card project-card reveal delay-2">
             <div>
               <img src="emergence.jpg" alt="Emergence">
               <h3>Emergence</h3>
@@ -665,7 +833,7 @@
             <a class="btn" href="https://open.spotify.com/album/6iyyQZIuAQLrAYFg7oOwmI?si=FNIOPLl9RjeT91_h5-A1xA" target="_blank" rel="noopener noreferrer">Open Project</a>
           </div>
 
-          <div class="card project-card">
+          <div class="card project-card reveal delay-3">
             <div>
               <img src="mending.jpg" alt="Mending What's Broken">
               <h3>Mending What's Broken: Odes for Stalwart Days &amp; Fearless Nights Remastered</h3>
@@ -678,7 +846,7 @@
       </div>
     </section>
 
-    <section class="section" id="socials">
+    <section class="section reveal" id="socials">
       <div class="container">
         <h2 class="section-title">Social Links</h2>
         <p class="section-intro">
@@ -686,7 +854,7 @@
         </p>
 
         <div class="social-grid">
-          <div class="card social-card">
+          <div class="card social-card reveal delay-1">
             <h3>Streaming</h3>
             <p>Main listening platforms.</p>
             <div class="social-links">
@@ -696,7 +864,7 @@
             </div>
           </div>
 
-          <div class="card social-card">
+          <div class="card social-card reveal delay-2">
             <h3>Video</h3>
             <p>Channel and visual presence.</p>
             <div class="social-links">
@@ -704,7 +872,7 @@
             </div>
           </div>
 
-          <div class="card social-card">
+          <div class="card social-card reveal delay-3">
             <h3>Social</h3>
             <p>Active profiles</p>
             <div class="social-links">
@@ -722,5 +890,25 @@
     <strong>Prox Centauri</strong>
   </footer>
 
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    reveals.forEach((el) => {
+      if (!el.classList.contains('is-visible')) {
+        revealObserver.observe(el);
+      }
+    });
+  </script>
 </body>
 </html>
