@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prox Centauri</title>
-  <p style="color: var(--muted); margin-bottom: 20px;">
-  Start here.
-  </p>
   <meta name="description" content="Prox Centauri, Artist, Producer, Sound" />
   <style>
     :root {
@@ -24,13 +21,6 @@
       --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
     }
 
-    .hero-logo {
-  width: 140px;
-  margin-bottom: 16px;
-  opacity: 0.9;
-  filter: drop-shadow(0 10px 25px rgba(0,0,0,0.4));
-    }
-    
     * {
       box-sizing: border-box;
       scroll-behavior: smooth;
@@ -41,7 +31,7 @@
       font-family: Arial, sans-serif;
       color: var(--text);
       position: relative;
-z-index: 1;
+      z-index: 1;
       background:
         radial-gradient(circle at top left, rgba(210,139,77,0.12), transparent 26%),
         radial-gradient(circle at top right, rgba(143,78,44,0.12), transparent 24%),
@@ -147,6 +137,7 @@ z-index: 1;
       padding: 30px;
       backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
+      text-align: center;
     }
 
     .eyebrow {
@@ -154,7 +145,23 @@ z-index: 1;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent-soft);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+    }
+
+    .hero-logo {
+      width: 180px;
+      margin: 10px auto 18px;
+      display: block;
+      opacity: 0.95;
+      filter: drop-shadow(0 10px 25px rgba(0,0,0,0.4));
+      box-shadow: 0 0 40px rgba(210, 139, 77, 0.15);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
     }
 
     h1 {
@@ -166,7 +173,7 @@ z-index: 1;
     }
 
     .hero-sub {
-      margin-top: 14px;
+      margin: 14px auto 0;
       color: #e2d0c0;
       font-size: clamp(1rem, 2vw, 1.15rem);
       max-width: 560px;
@@ -177,6 +184,7 @@ z-index: 1;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      justify-content: center;
     }
 
     .btn {
@@ -225,6 +233,11 @@ z-index: 1;
       max-width: 760px;
       color: var(--muted);
       margin-bottom: 30px;
+    }
+
+    .start-here {
+      color: var(--muted);
+      margin-bottom: 20px;
     }
 
     .card {
@@ -278,11 +291,11 @@ z-index: 1;
     }
 
     .feature-copy {
-  background:
-    linear-gradient(135deg, rgba(210,139,77,0.18), rgba(143,78,44,0.12)),
-    var(--card);
-  border: 1px solid rgba(226,177,124,0.35);
-}
+      background:
+        linear-gradient(135deg, rgba(210,139,77,0.18), rgba(143,78,44,0.12)),
+        var(--card);
+      border: 1px solid rgba(226,177,124,0.35);
+    }
 
     .feature-copy p {
       color: var(--muted);
@@ -313,8 +326,12 @@ z-index: 1;
     }
 
     .embed-wrap {
-  border: 1px solid rgba(226,177,124,0.25);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(226,177,124,0.25);
+      background: rgba(0,0,0,0.20);
+      min-height: 352px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
 
     .projects-grid {
@@ -392,6 +409,49 @@ z-index: 1;
       letter-spacing: 1px;
     }
 
+    /* LEAVES BACKGROUND */
+    .leaves {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .leaves span {
+      position: absolute;
+      display: block;
+      width: 18px;
+      height: 18px;
+      background: rgba(210, 139, 77, 0.22);
+      border-radius: 50% 0;
+      animation: fall linear infinite;
+    }
+
+    .leaves span:nth-child(1) { left: 10%; animation-duration: 12s; }
+    .leaves span:nth-child(2) { left: 25%; animation-duration: 10s; }
+    .leaves span:nth-child(3) { left: 40%; animation-duration: 14s; }
+    .leaves span:nth-child(4) { left: 60%; animation-duration: 11s; }
+    .leaves span:nth-child(5) { left: 75%; animation-duration: 13s; }
+    .leaves span:nth-child(6) { left: 90%; animation-duration: 9s; }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
     @media (max-width: 980px) {
       .about-wrap,
       .feature-grid,
@@ -429,60 +489,21 @@ z-index: 1;
       .section {
         padding: 72px 0;
       }
+
+      .hero-logo {
+        width: 160px;
+      }
     }
-      /* LEAVES BACKGROUND */
-.leaves {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.leaves span {
-  position: absolute;
-  display: block;
-  width: 18px;
-  height: 18px;
-  background: rgba(210, 139, 77, 0.22);
-  border-radius: 50% 0;
-  animation: fall linear infinite;
-}
-
-/* positioning + timing */
-.leaves span:nth-child(1) { left: 10%; animation-duration: 12s; }
-.leaves span:nth-child(2) { left: 25%; animation-duration: 10s; }
-.leaves span:nth-child(3) { left: 40%; animation-duration: 14s; }
-.leaves span:nth-child(4) { left: 60%; animation-duration: 11s; }
-.leaves span:nth-child(5) { left: 75%; animation-duration: 13s; }
-.leaves span:nth-child(6) { left: 90%; animation-duration: 9s; }
-
-@keyframes fall {
-  0% {
-    transform: translateY(-10vh) rotate(0deg);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateY(110vh) rotate(360deg);
-    opacity: 0;
-  }
-}
   </style>
 </head>
 <body>
   <div class="leaves">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
   <nav class="nav">
@@ -502,7 +523,7 @@ z-index: 1;
     <div class="container hero-content">
       <div class="hero-card">
         <div class="eyebrow">Artist • Producer • Sound</div>
-        <img src="tea-logo.png" class="hero-logo">
+        <img src="tea-logo.png" class="hero-logo" alt="Prox Centauri tea logo">
         <h1>Prox Centauri</h1>
         <p class="hero-sub">
           Calm, atmospheric, and rooted in lyricism.
@@ -515,9 +536,13 @@ z-index: 1;
       </div>
     </div>
   </header>
-<section class="section" id="latest">
+
+  <main>
+
+    <section class="section" id="latest">
       <div class="container">
         <h2 class="section-title">Reading Tea Leaves Vol. IV</h2>
+        <p class="start-here">Start here.</p>
         <p class="section-intro">
           Featured release, newest project, and an entry point into the catalog.
         </p>
@@ -544,7 +569,7 @@ z-index: 1;
                 src="https://open.spotify.com/embed/album/7yLJ4I5clpdyYSkoNXwDYk?utm_source=generator&theme=0"
                 width="100%"
                 height="352"
-                frameBorder="0"
+                frameborder="0"
                 allowfullscreen=""
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy">
@@ -553,9 +578,7 @@ z-index: 1;
           </div>
         </div>
       </div>
-</section>
-  
-  <main>
+    </section>
 
     <section class="section" id="about">
       <div class="container">
